@@ -18,11 +18,11 @@ export class HotelReviewService {
   //   type bit dak bisa di isi selain angka 0 1
   async createHotelReview(data: HotelReviews): Promise<HotelReviews> {
     enum hore_Rating {
-      bad = '1',
-      less = '2',
-      cool = '3',
-      good = '4',
-      best = '5',
+      bad = 1,
+      less = 2,
+      cool = 3,
+      good = 4,
+      best = 5,
     }
     let bad1 = hore_Rating.bad;
     let less1 = hore_Rating.less;

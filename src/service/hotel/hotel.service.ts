@@ -64,4 +64,9 @@ export class HotelService {
     await this.hotelsRepository.delete({ hotelId: id });
     return 'berhasil hapus data';
   }
+
+  // prosedur
+  async findProcedure() {
+    return await this.hotelsRepository.query('SELECT * FROM hotel.card_hotel');
+  }
 }

@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "pg": "typeorm-model-generator -o model -h localhost -d hotel_realta -p 5432 -u postgres -x root -s booking,hotel,humanresource,master,payment,purchasing,resto,users -e postgres"
+    "pg": "typeorm-model-generator -o model -h localhost -d hotel_realta -p 5432 -u postgres -x 12345678 -s booking,hotel,humanresource,master,payment,purchasing,resto,users -e postgres -c hotel"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
