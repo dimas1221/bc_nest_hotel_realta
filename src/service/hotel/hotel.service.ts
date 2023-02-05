@@ -39,8 +39,8 @@ export class HotelService {
   //     }
   // }
   //view by hotel name
-  async findByName(hotelName: any): Promise<any> {
-    return await this.hotelsRepository.findOneBy({ hotelName: hotelName });
+  async findById(id: any): Promise<any> {
+    return await this.hotelsRepository.findOneBy({ hotelId: id });
   }
   // update
   async updateHotel(id: string, data: Hotels): Promise<any> {
@@ -68,5 +68,21 @@ export class HotelService {
   // prosedur
   async findProcedure() {
     return await this.hotelsRepository.query('SELECT * FROM hotel.card_hotel');
+  }
+
+  // review user
+  async reviewHotel(id: any) {
+    return await this.hotelsRepository.query(
+      'select * from hotel.get_review($1)',
+      [id],
+    );
+  }
+
+  // get card by id
+  async getIdCard(id: any) {
+    return await this.hotelsRepository.query(
+      'select * from hotel.get_cardid($1)',
+      [id],
+    );
   }
 }

@@ -25,9 +25,19 @@ export class HotelController {
     return this.hotelService.findProcedure();
   }
 
-  @Get('viewByName')
+  @Get('card/:id')
+  getIdCard(@Param() param: any) {
+    return this.hotelService.getIdCard(param.id);
+  }
+
+  @Get('review/:id')
+  reviewHotel(@Param() param: any) {
+    return this.hotelService.reviewHotel(param.id);
+  }
+
+  @Get('view/:id')
   findByname(@Param() Params) {
-    return this.hotelService.findByName(Params);
+    return this.hotelService.findById(Params.id);
   }
 
   @Post('insert')

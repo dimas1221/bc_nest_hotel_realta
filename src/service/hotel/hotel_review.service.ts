@@ -58,7 +58,7 @@ export class HotelReviewService {
   }
 
   //view by userid
-  async findByUser(horeUser: any): Promise<any> {
-    return await this.repositoryHotelReview.findOneBy({ horeUser: horeUser });
+  async findByUser(id: any): Promise<any> {
+    return await this.repositoryHotelReview.findOneBy({ horeId: id });
   }
 }
