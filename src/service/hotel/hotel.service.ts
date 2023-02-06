@@ -79,10 +79,11 @@ export class HotelService {
   }
 
   // get card by id
-  async getIdCard(id: any) {
+  async getIdCard(id: number) {
+    const inputValue = typeof id === undefined ? id : 0;
     return await this.hotelsRepository.query(
       'select * from hotel.get_cardid($1)',
-      [id],
+      [inputValue],
     );
   }
 }
