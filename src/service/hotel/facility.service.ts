@@ -14,6 +14,10 @@ export class FacilityService {
   async findAllFacility(): Promise<any> {
     return await this.repositoryFac.find();
   }
+  // prosedur get all faci hotel with photo
+  async findallFaciHotel() {
+    return await this.repositoryFac.query('select * from hotel.faci_allhotel');
+  }
   // insert in table hotel
   async createFacility(data: Facilities): Promise<Facilities> {
     enum faci_measure_unit {
