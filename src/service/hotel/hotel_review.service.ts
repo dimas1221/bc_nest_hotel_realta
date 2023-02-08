@@ -14,6 +14,13 @@ export class HotelReviewService {
   async findAllHotelReview(): Promise<any> {
     return await this.repositoryHotelReview.find();
   }
+
+  // proceddure hotel review
+  async findProsedurHore() {
+    return await this.repositoryHotelReview.query(
+      'select * from hotel.user_review',
+    );
+  }
   // insert in table hotel
   //   type bit dak bisa di isi selain angka 0 1
   async createHotelReview(data: HotelReviews): Promise<HotelReviews> {

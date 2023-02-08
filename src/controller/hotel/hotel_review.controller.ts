@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { HotelReviewService } from 'src/service/hotel/hotel_review.service';
 import { HotelReviews } from 'entities/HotelReviews';
-@Controller('hotelreview')
+@Controller('hore')
 export class HotelReviewController {
   constructor(private readonly hotelReviewService: HotelReviewService) {}
   @Get('view')
@@ -44,5 +44,10 @@ export class HotelReviewController {
   @Get('viewByUser/:id')
   findByname(@Param() Params) {
     return this.hotelReviewService.findByUser(Params.id);
+  }
+
+  @Get('alluser')
+  getProcedureHore() {
+    return this.hotelReviewService.findProsedurHore();
   }
 }
