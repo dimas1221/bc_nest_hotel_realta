@@ -25,15 +25,15 @@ export class HotelController {
     return this.hotelService.findProcedure();
   }
 
-  @Get('card/:id')
-  getIdCard(@Param() param: any) {
-    return this.hotelService.getIdCard(param.id);
-  }
+  // @Get('card/:id')
+  // getIdCard(@Param() param: any) {
+  //   return this.hotelService.getIdCard(param.id);
+  // }
 
-  @Get('review/:id')
-  reviewHotel(@Param() param: any) {
-    return this.hotelService.reviewHotel(param.id);
-  }
+  // @Get('review/:id')
+  // reviewHotel(@Param() param: any) {
+  //   return this.hotelService.reviewHotel(param.id);
+  // }
 
   @Get('view/:id')
   findByname(@Param() Params) {

@@ -19,10 +19,32 @@ import { FacilityPhotos } from 'entities/FacilityPhotos';
 import { FacilityPhotosController } from 'src/controller/hotel/facility_photos.controller';
 import { FacilityPhotosService } from 'src/service/hotel/facility_photos.service';
 
-
 @Module({
-  imports: [TypeOrmModule.forFeature([Department,Hotels,HotelReviews,FacilityPriceHistory,Facilities, FacilityPhotos])],
-  controllers: [DepartmentController,HotelController,HotelReviewController, FacilityPriceHistoryController,FacilityController,FacilityPhotosController],
-  providers: [DepartmentService, HotelService, HotelReviewService, FacilityPriceHistoryService,FacilityService,FacilityPhotosService],
+  imports: [
+    TypeOrmModule.forFeature([
+      Department,
+      Hotels,
+      HotelReviews,
+      FacilityPriceHistory,
+      Facilities,
+      FacilityPhotos,
+    ]),
+  ],
+  controllers: [
+    DepartmentController,
+    HotelController,
+    HotelReviewController,
+    FacilityPriceHistoryController,
+    FacilityController,
+    FacilityPhotosController,
+  ],
+  providers: [
+    DepartmentService,
+    HotelService,
+    HotelReviewService,
+    FacilityPriceHistoryService,
+    FacilityService,
+    FacilityPhotosService,
+  ],
 })
 export class GlobalModule {}

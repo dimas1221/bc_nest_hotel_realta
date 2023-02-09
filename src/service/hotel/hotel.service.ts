@@ -19,32 +19,13 @@ export class HotelService {
     return await this.hotelsRepository.save(this.hotelsRepository.create(data));
   }
 
-  // insert in table hotel2
-  // async createHotel(data: Hotels):Promise<Hotels>{
-  //     enum ratingHotel{
-  //         A=5,
-  //         B=4,
-  //         C=3,
-  //         D=2,
-  //     }
-  //     let a = ratingHotel.A
-
-  //     if(data.hotelRatingStar !== a) {
-  //         console.log('errror')
-  //     } else {
-  //         const result = await this.hotelsRepository.save(
-  //             this.hotelsRepository.create(data)
-  //         )
-  //         return result;
-  //     }
-  // }
   //view by hotel name
   async findById(id: any): Promise<any> {
     return await this.hotelsRepository.findOneBy({ hotelId: id });
   }
   // update
   async updateHotel(id: string, data: Hotels): Promise<any> {
-    return this.hotelsRepository
+    return await this.hotelsRepository
       .createQueryBuilder()
       .update()
       .set({
@@ -71,19 +52,19 @@ export class HotelService {
   }
 
   // review user
-  async reviewHotel(id: any) {
-    return await this.hotelsRepository.query(
-      'select * from hotel.get_review($1)',
-      [id],
-    );
-  }
+  // async reviewHotel(id: any) {
+  //   return await this.hotelsRepository.query(
+  //     'select * from hotel.get_review($1)',
+  //     [id],
+  //   );
+  // }
 
   // get card by id
-  async getIdCard(id: number) {
-    const inputValue = typeof id === undefined ? id : 0;
-    return await this.hotelsRepository.query(
-      'select * from hotel.get_cardid($1)',
-      [inputValue],
-    );
-  }
+  // async getIdCard(id: number) {
+  //   const inputValue = typeof id === undefined ? id : 0;
+  //   return await this.hotelsRepository.query(
+  //     'select * from hotel.get_cardid($1)',
+  //     [inputValue],
+  //   );
+  // }
 }
