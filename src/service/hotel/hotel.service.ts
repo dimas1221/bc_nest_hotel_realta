@@ -24,7 +24,7 @@ export class HotelService {
     return await this.hotelsRepository.findOneBy({ hotelId: id });
   }
   // update
-  async updateHotel(id: string, data: Hotels): Promise<any> {
+  async updateHotel(id: any, data: Hotels): Promise<any> {
     return await this.hotelsRepository
       .createQueryBuilder()
       .update()

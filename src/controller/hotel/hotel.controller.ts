@@ -51,12 +51,12 @@ export class HotelController {
   }
 
   @Put(':id')
-  async updateHotel(@Param('id') id: string, @Body() body: any) {
+  async updateHotel(@Param('id') id: any, @Body() body: any) {
     const newData: any = await this.hotelService.updateHotel(id, body);
     if (!newData) {
-      return 'customer dont updated';
+      return 'hotel dont updated';
     } else {
-      return 'customer updated';
+      return 'hotel updated';
     }
   }
   @Delete('delete/:id')
