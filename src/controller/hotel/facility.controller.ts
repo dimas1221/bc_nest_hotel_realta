@@ -24,6 +24,11 @@ export class FacilityController {
     return this.faciService.findallFaciHotel();
   }
 
+  @Get('maxroomid')
+  findMaxRoomId() {
+    return this.faciService.findMaxRoomId();
+  }
+
   @Post('insert')
   async createFacilityl(@Body() data: Facilities) {
     const hotel = await this.faciService.createFacility(data);

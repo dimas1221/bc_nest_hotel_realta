@@ -12,7 +12,7 @@ export class FacilityService {
 
   // find all htels
   async findAllFacility(): Promise<any> {
-    return await this.repositoryFac.find();
+    return await this.repositoryFac.query('select * from hotel.facilities');
   }
   // prosedur get all faci hotel with photo
   async findallFaciHotel() {
@@ -51,5 +51,12 @@ export class FacilityService {
     return await this.repositoryFac.findOneBy({
       faciRoomNumber: faciRoomNumber,
     });
+  }
+
+  // nilai max dari faci room
+  async findMaxRoomId() {
+    return await this.repositoryFac.query(
+      'select faci_cagro_id, max(faci_room_number) as max_roomid from hotel.facilities group by faci_cagro_id',
+    );
   }
 }
