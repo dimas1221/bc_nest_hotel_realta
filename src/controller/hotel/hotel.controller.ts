@@ -24,6 +24,10 @@ export class HotelController {
   findProcedure() {
     return this.hotelService.findProcedure();
   }
+  @Get('address')
+  findAddress() {
+    return this.hotelService.findAddress();
+  }
 
   // @Get('card/:id')
   // getIdCard(@Param() param: any) {

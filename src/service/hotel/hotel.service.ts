@@ -14,6 +14,10 @@ export class HotelService {
   async findAllHotel(): Promise<any> {
     return await this.hotelsRepository.find();
   }
+  // find address
+  async findAddress() {
+    return await this.hotelsRepository.query('select * from hotel.address');
+  }
   // insert in table hotel
   async createHotel(data: Hotels): Promise<Hotels> {
     return await this.hotelsRepository.save(this.hotelsRepository.create(data));
