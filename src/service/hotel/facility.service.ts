@@ -20,18 +20,19 @@ export class FacilityService {
   }
   // insert in table hotel
   async createFacility(data: Facilities): Promise<Facilities> {
-    enum faci_measure_unit {
-      p = 'people',
-      b = 'beds',
-    }
-    let people = faci_measure_unit.p;
-    let beds = faci_measure_unit.b;
+    // enum faci_measure_unit {
+    //   p = 'people',
+    //   b = 'beds',
+    // }
+    // let people = faci_measure_unit.p;
+    // let beds = faci_measure_unit.b;
 
-    if (data.faciMeasureUnit == people || data.faciMeasureUnit == beds) {
-      return await this.repositoryFac.save(this.repositoryFac.create(data));
-    } else {
-      console.log('error');
-    }
+    // if (data.faciMeasureUnit == people || data.faciMeasureUnit == beds) {
+    //   return await this.repositoryFac.save(this.repositoryFac.create(data));
+    // } else {
+    //   console.log('error');
+    // }
+    return await this.repositoryFac.save(this.repositoryFac.create(data));
   }
 
   // update
