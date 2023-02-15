@@ -12,7 +12,9 @@ export class FacilityPhotosService {
 
   // find all htels
   async findAllFaciPhotos(): Promise<any> {
-    return await this.repositoryFacPhotos.find();
+    return await this.repositoryFacPhotos.query(
+      'select * from hotel.facility_photos',
+    );
   }
   // insert in table hotel
   async createFaciPhotos(data: FacilityPhotos): Promise<FacilityPhotos> {
