@@ -60,4 +60,9 @@ export class FacilityService {
       'select faci_cagro_id, max(faci_room_number) as max_roomid from hotel.facilities group by faci_cagro_id',
     );
   }
+
+  async deleteFaci(id: any): Promise<any> {
+    await this.repositoryFac.delete({ faciId: id });
+    return 'berhasil hapus data';
+  }
 }

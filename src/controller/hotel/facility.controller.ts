@@ -53,4 +53,9 @@ export class FacilityController {
   findByname(@Param() Params) {
     return this.faciService.findByNoRoom(Params);
   }
+
+  @Delete('delete/:id')
+  async deleteFaci(@Param('id') id: any) {
+    return this.faciService.deleteFaci(id);
+  }
 }
