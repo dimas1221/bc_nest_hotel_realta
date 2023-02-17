@@ -55,7 +55,7 @@ export class FacilityController {
     @Body('faciModifiedDate') faciModifiedDate: Date,
     @Body('faciHotel') faciHotel: number,
     @Body('faciCagro') faciCagro: number,
-  ): Promise<void> {
+  ): Promise<{ message: string }> {
     await this.faciService.insertFacilityAndPriceHistory(
       faciName,
       faciDescription,
@@ -73,6 +73,9 @@ export class FacilityController {
       faciHotel,
       faciCagro,
     );
+    return {
+      message: 'Facility and price history has been successfully added.',
+    };
   }
   @Put(':id')
   async updateFacility(@Param('id') id: string, @Body() body: any) {
