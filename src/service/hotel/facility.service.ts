@@ -19,20 +19,66 @@ export class FacilityService {
     return await this.repositoryFac.query('select * from hotel.faci_allhotel');
   }
   // insert in table hotel
-  async createFacility(data: Facilities): Promise<Facilities> {
-    // enum faci_measure_unit {
-    //   p = 'people',
-    //   b = 'beds',
-    // }
-    // let people = faci_measure_unit.p;
-    // let beds = faci_measure_unit.b;
+  // enum faci_measure_unit {
+  //   p = 'people',
+  //   b = 'beds',
+  // }
+  // let people = faci_measure_unit.p;
+  // let beds = faci_measure_unit.b;
 
-    // if (data.faciMeasureUnit == people || data.faciMeasureUnit == beds) {
-    //   return await this.repositoryFac.save(this.repositoryFac.create(data));
-    // } else {
-    //   console.log('error');
-    // }
-    return await this.repositoryFac.save(this.repositoryFac.create(data));
+  // if (data.faciMeasureUnit == people || data.faciMeasureUnit == beds) {
+  //   return await this.repositoryFac.save(this.repositoryFac.create(data));
+  // } else {
+  //   console.log('error');
+  // }
+  // async createFacility(data: Facilities): Promise<Facilities> {
+  //   return await this.repositoryFac.save(this.repositoryFac.create(data));
+  // }
+  // async createFacility(data: Facilities): Promise<Facilities> {
+  //   const jsonData = JSON.stringify(data);
+  //   return await this.repositoryFac.query(
+  //     `CALL hotel.insert_facility_and_price_history(${jsonData})`,
+  //   );
+  // }
+  async insertFacilityAndPriceHistory(
+    faciName: string,
+    faciDescription: string,
+    faciMaxNumber: number,
+    faciMeasureUnit: string,
+    faciRoomNumber: string,
+    faciStartdate: Date,
+    faciEndate: Date,
+    faciLowPrice: number,
+    faciHightPrice: number,
+    faciRatePrice: number,
+    faciDiscount: number,
+    faciTaxRate: number,
+    faciModifiedDate: Date,
+    faciHotel: number,
+    faciCagro: number,
+  ): Promise<void> {
+    await this.repositoryFac.query(
+      `CALL hotel.insert_facility_and_price_history(
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15
+      )`,
+      [
+        faciName,
+        faciDescription,
+        faciMaxNumber,
+        faciMeasureUnit,
+        faciRoomNumber,
+        faciStartdate,
+        faciEndate,
+        faciLowPrice,
+        faciHightPrice,
+        faciRatePrice,
+        faciDiscount,
+        faciTaxRate,
+        faciModifiedDate,
+        faciHotel,
+        faciCagro,
+      ],
+    );
   }
 
   // update

@@ -29,16 +29,51 @@ export class FacilityController {
     return this.faciService.findMaxRoomId();
   }
 
+  // @Post('insert')
+  // async createFacilityl(@Body() data: Facilities) {
+  //   const faci = await this.faciService.createFacility(data);
+  //   if (!faci) {
+  //     return 'failed insert to facis';
+  //   } else {
+  //     return 'success insert to faci';
+  //   }
+  // }
   @Post('insert')
-  async createFacilityl(@Body() data: Facilities) {
-    const faci = await this.faciService.createFacility(data);
-    if (!faci) {
-      return 'failed insert to facis';
-    } else {
-      return 'success insert to faci';
-    }
+  async insertFacilityAndPriceHistory(
+    @Body('faciName') faciName: string,
+    @Body('faciDescription') faciDescription: string,
+    @Body('faciMaxNumber') faciMaxNumber: number,
+    @Body('faciMeasureUnit') faciMeasureUnit: string,
+    @Body('faciRoomNumber') faciRoomNumber: string,
+    @Body('faciStartdate') faciStartdate: Date,
+    @Body('faciEndate') faciEndate: Date,
+    @Body('faciLowPrice') faciLowPrice: number,
+    @Body('faciHightPrice') faciHightPrice: number,
+    @Body('faciRatePrice') faciRatePrice: number,
+    @Body('faciDiscount') faciDiscount: number,
+    @Body('faciTaxRate') faciTaxRate: number,
+    @Body('faciModifiedDate') faciModifiedDate: Date,
+    @Body('faciHotel') faciHotel: number,
+    @Body('faciCagro') faciCagro: number,
+  ): Promise<void> {
+    await this.faciService.insertFacilityAndPriceHistory(
+      faciName,
+      faciDescription,
+      faciMaxNumber,
+      faciMeasureUnit,
+      faciRoomNumber,
+      faciStartdate,
+      faciEndate,
+      faciLowPrice,
+      faciHightPrice,
+      faciRatePrice,
+      faciDiscount,
+      faciTaxRate,
+      faciModifiedDate,
+      faciHotel,
+      faciCagro,
+    );
   }
-
   @Put(':id')
   async updateFacility(@Param('id') id: string, @Body() body: any) {
     const newData: any = await this.faciService.updateFacility(id, body);
