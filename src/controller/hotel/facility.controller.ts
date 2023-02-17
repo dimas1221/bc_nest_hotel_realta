@@ -31,11 +31,11 @@ export class FacilityController {
 
   @Post('insert')
   async createFacilityl(@Body() data: Facilities) {
-    const hotel = await this.faciService.createFacility(data);
-    if (!hotel) {
-      return 'failed insert to hotels';
+    const faci = await this.faciService.createFacility(data);
+    if (!faci) {
+      return 'failed insert to facis';
     } else {
-      return 'success insert to hotel';
+      return 'success insert to faci';
     }
   }
 

@@ -12,7 +12,7 @@ export class FacilityPriceHistoryService {
 
   // find all htels
   async findAllFacilitiPriceHistory(): Promise<any> {
-    return await this.fph.find();
+    return await this.fph.query('select * from hotel.facility_price_history');
   }
   // insert in table hotel
   async createFacilitiPriceHisty(
