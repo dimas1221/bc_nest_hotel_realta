@@ -9,7 +9,22 @@ import {
   Req,
 } from '@nestjs/common';
 import { FacilityService } from 'src/service/hotel/facility.service';
-import { Facilities } from 'entities/Facilities';
+interface dataFaci {
+  faci_name: any;
+  faci_description: any;
+  faci_max_number: any;
+  faci_measure_unit: any;
+  faci_room_number: any;
+  faci_startdate: any;
+  faci_endate: any;
+  faci_low_price: any;
+  faci_hight_price: any;
+  faci_rate_price: any;
+  faci_discount: any;
+  faci_tax_rate: any;
+  faci_cagro_id: any;
+}
+
 @Controller('facility')
 export class FacilityController {
   constructor(private readonly faciService: FacilityService) {}
@@ -40,51 +55,16 @@ export class FacilityController {
   // }
   @Post('insert')
   async insertFacilityAndPriceHistory(
-    @Body('faciName') faciName: string,
-    @Body('faciDescription') faciDescription: string,
-    @Body('faciMaxNumber') faciMaxNumber: number,
-    @Body('faciMeasureUnit') faciMeasureUnit: string,
-    @Body('faciRoomNumber') faciRoomNumber: string,
-    @Body('faciStartdate') faciStartdate: Date,
-    @Body('faciEndate') faciEndate: Date,
-    @Body('faciLowPrice') faciLowPrice: number,
-    @Body('faciHightPrice') faciHightPrice: number,
-    @Body('faciRatePrice') faciRatePrice: number,
-    @Body('faciDiscount') faciDiscount: number,
-    @Body('faciTaxRate') faciTaxRate: number,
-    @Body('faciModifiedDate') faciModifiedDate: Date,
-    @Body('faciHotel') faciHotel: number,
-    @Body('faciCagro') faciCagro: number,
+    @Body() body: any,
   ): Promise<{ message: string }> {
-    await this.faciService.insertFacilityAndPriceHistory(
-      faciName,
-      faciDescription,
-      faciMaxNumber,
-      faciMeasureUnit,
-      faciRoomNumber,
-      faciStartdate,
-      faciEndate,
-      faciLowPrice,
-      faciHightPrice,
-      faciRatePrice,
-      faciDiscount,
-      faciTaxRate,
-      faciModifiedDate,
-      faciHotel,
-      faciCagro,
-    );
+    await this.faciService.insertFacilityAndPriceHistory(body);
     return {
       message: 'Facility and price history has been successfully added.',
     };
   }
   @Put(':id')
-  async updateFacility(@Param('id') id: string, @Body() body: any) {
-    const newData: any = await this.faciService.updateFacility(id, body);
-    if (!newData) {
-      return 'dont updated';
-    } else {
-      return 'updated';
-    }
+  async updateFacility(@Param('id') id: any, @Body() body: any) {
+    return await this.faciService.updateFacility(id, body);
   }
 
   @Get('viewByNoRoom')
