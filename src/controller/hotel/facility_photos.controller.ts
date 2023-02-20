@@ -7,9 +7,14 @@ import {
   Post,
   Put,
   Req,
+  UploadedFile,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { FacilityPhotosService } from 'src/service/hotel/facility_photos.service';
 import { FacilityPhotos } from 'entities/FacilityPhotos';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import multer, { diskStorage } from 'multer';
 
 @Controller('facility-photos')
 export class FacilityPhotosController {
@@ -43,5 +48,50 @@ export class FacilityPhotosController {
   @Get('viewByFaphoId')
   findByname(@Param() Params) {
     return this.faphoService.findByFaphoId(Params);
+  }
+
+  // @Post('upload')
+  // @UseInterceptors(
+  //   FileInterceptor('file', {
+  //     dest: 'public/upload',
+  //     storage: diskStorage({
+  //       destination: 'public/upload',
+  //       filename(req, file, cb) {
+  //         return cb(null, file.originalname);
+  //       },
+  //     }),
+  //   }),
+  // )
+  // async uploadFile(
+  //   @UploadedFile() file: Express.Multer.File,
+  //   @Body() body,
+  // ): Promise<{ message: string }> {
+  //   await this.faphoService.storeFileInfo(file, body);
+  //   return {
+  //     message: 'Facility photo has been successfully uploaded.',
+  //   };
+  // }
+
+  @Post('upload')
+  @UseInterceptors(
+    FilesInterceptor('files', 10, {
+      dest: 'public/upload',
+      storage: diskStorage({
+        destination: 'public/upload',
+        filename(req, file, cb) {
+          return cb(null, file.originalname);
+        },
+      }),
+    }),
+  )
+  async uploadFiles(
+    @UploadedFiles() files: Express.Multer.File[],
+    @Body() body,
+  ): Promise<{ message: string }> {
+    const facilityPhotos = await this.faphoService.storeFileInfo(files, body);
+
+    return {
+      message: 'Facility photos have been successfully uploaded.',
+    };
   }
 }
