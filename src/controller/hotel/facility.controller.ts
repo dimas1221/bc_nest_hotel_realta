@@ -54,13 +54,13 @@ export class FacilityController {
   //   }
   // }
   @Post('insert')
-  async insertFacilityAndPriceHistory(
-    @Body() body: any,
-  ): Promise<{ message: string }> {
-    await this.faciService.insertFacilityAndPriceHistory(body);
-    return {
-      message: 'Facility and price history has been successfully added.',
-    };
+  async insertFacilityAndPriceHistory(@Body() body: any) {
+    const result = await this.faciService.insertFacilityAndPriceHistory(body);
+    if (!result) {
+      return 'failed';
+    } else {
+      return 'Facility and price history has been successfully added';
+    }
   }
   @Put(':id')
   async updateFacility(@Param('id') id: any, @Body() body: any) {

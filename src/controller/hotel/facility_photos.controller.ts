@@ -62,14 +62,13 @@ export class FacilityPhotosController {
       }),
     }),
   )
-  async uploadFile(
-    @UploadedFile() file: Express.Multer.File,
-    @Body() body,
-  ): Promise<{ message: string }> {
-    await this.faphoService.storeFileInfo(file, body);
-    return {
-      message: 'Facility photo has been successfully uploaded.',
-    };
+  async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() body) {
+    const result = await this.faphoService.storeFileInfo(file, body);
+    if (!result) {
+      return 'gagal upload';
+    } else {
+      return 'berhasil upload';
+    }
   }
 
   // @Post('upload')

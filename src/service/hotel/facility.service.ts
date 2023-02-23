@@ -60,8 +60,8 @@ export class FacilityService {
   //     `CALL hotel.insert_facility_and_price_history(${jsonData})`,
   //   );
   // }
-  async insertFacilityAndPriceHistory(data: Facilities): Promise<void> {
-    await this.repositoryFac.query(
+  async insertFacilityAndPriceHistory(data: Facilities) {
+    return await this.repositoryFac.query(
       `CALL hotel.insert_facility_and_price_history(
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15
       )`,

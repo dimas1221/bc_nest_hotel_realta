@@ -64,7 +64,7 @@ export class FacilityPhotosService {
     fileInfo.faphoThumbnailFilename = `tumb ${file.filename}`;
     fileInfo.faphoFaci = body.faphoFaci;
 
-    await this.repositoryFacPhotos.save(fileInfo);
+    return await this.repositoryFacPhotos.save(fileInfo);
   }
 
   // async storeFileInfo(
