@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FacilityPhotos } from 'entities/FacilityPhotos';
-import { fileName } from 'typeorm-model-generator/dist/src/NamingStrategy';
 
 @Injectable()
 export class FacilityPhotosService {
@@ -53,47 +52,43 @@ export class FacilityPhotosService {
   }
 
   // upload photo
-  // async storeFileInfo(
-  //   file: {
-  //     filename: string;
-  //     originalname: string;
-  //   },
-  //   body: any,
-  // ) {
-  //   const fileInfo = new FacilityPhotos();
-  //   // fileInfo.regionName = body.regionName;
-  //   fileInfo.faphoUrl = `public/uploads/${file.originalname}`;
-  //   fileInfo.faphoPhotoFilename = file.filename;
-  //   fileInfo.faphoModifieldDate = new Date();
-  //   fileInfo.faphoThumbnailFilename = `tumb ${file.filename}`;
-  //   fileInfo.faphoPrimary = body.faphoPrimary;
-  //   fileInfo.faphoFaci = body.faphoFaci;
-
-  //   await this.repositoryFacPhotos.save(fileInfo);
-  // }
-
   async storeFileInfo(
-    files: Express.Multer.File[], // ubah parameter file menjadi files dengan tipe array of Express.Multer.File
+    file: { filename: string; originalname: string },
     body: any,
   ) {
-    const facilityPhotos: FacilityPhotos[] = [];
-    const promises = [];
+    const fileInfo = new FacilityPhotos();
 
-    for (const file of files) {
-      const fileInfo = new FacilityPhotos();
-      fileInfo.faphoUrl = `public/uploads/${file.originalname}`;
-      fileInfo.faphoPhotoFilename = file.filename;
-      fileInfo.faphoModifieldDate = new Date();
-      fileInfo.faphoThumbnailFilename = `tumb ${file.filename}`;
-      fileInfo.faphoPrimary = body.faphoPrimary;
-      fileInfo.faphoFaci = body.faphoFaci;
-      facilityPhotos.push(fileInfo);
+    fileInfo.faphoUrl = `public/uploads/${file.originalname}`;
+    fileInfo.faphoPhotoFilename = file.filename;
+    fileInfo.faphoModifieldDate = new Date();
+    fileInfo.faphoThumbnailFilename = `tumb ${file.filename}`;
+    fileInfo.faphoFaci = body.faphoFaci;
 
-      promises.push(this.repositoryFacPhotos.save(fileInfo));
-    }
-
-    await Promise.all(promises); // menjalankan semua promises pada satu waktu
-
-    return facilityPhotos; // mengembalikan array facilityPhotos
+    await this.repositoryFacPhotos.save(fileInfo);
   }
+
+  // async storeFileInfo(
+  //   files: Express.Multer.File[], // ubah parameter file menjadi files dengan tipe array of Express.Multer.File
+  //   body: any,
+  // ) {
+  //   const facilityPhotos: FacilityPhotos[] = [];
+  //   const promises = [];
+
+  //   for (const file of files) {
+  //     const fileInfo = new FacilityPhotos();
+  //     fileInfo.faphoUrl = `public/uploads/${file.originalname}`;
+  //     fileInfo.faphoPhotoFilename = file.filename;
+  //     fileInfo.faphoModifieldDate = new Date();
+  //     fileInfo.faphoThumbnailFilename = `tumb ${file.filename}`;
+  //     fileInfo.faphoPrimary = body.faphoPrimary;
+  //     fileInfo.faphoFaci = body.faphoFaci;
+  //     facilityPhotos.push(fileInfo);
+
+  //     promises.push(this.repositoryFacPhotos.save(fileInfo));
+  //   }
+
+  //   await Promise.all(promises); // menjalankan semua promises pada satu waktu
+
+  //   return facilityPhotos; // mengembalikan array facilityPhotos
+  // }
 }

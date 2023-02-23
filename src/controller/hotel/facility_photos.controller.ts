@@ -50,31 +50,9 @@ export class FacilityPhotosController {
     return this.faphoService.findByFaphoId(Params);
   }
 
-  // @Post('upload')
-  // @UseInterceptors(
-  //   FileInterceptor('file', {
-  //     dest: 'public/upload',
-  //     storage: diskStorage({
-  //       destination: 'public/upload',
-  //       filename(req, file, cb) {
-  //         return cb(null, file.originalname);
-  //       },
-  //     }),
-  //   }),
-  // )
-  // async uploadFile(
-  //   @UploadedFile() file: Express.Multer.File,
-  //   @Body() body,
-  // ): Promise<{ message: string }> {
-  //   await this.faphoService.storeFileInfo(file, body);
-  //   return {
-  //     message: 'Facility photo has been successfully uploaded.',
-  //   };
-  // }
-
   @Post('upload')
   @UseInterceptors(
-    FilesInterceptor('files', 10, {
+    FileInterceptor('file', {
       dest: 'public/upload',
       storage: diskStorage({
         destination: 'public/upload',
@@ -84,14 +62,36 @@ export class FacilityPhotosController {
       }),
     }),
   )
-  async uploadFiles(
-    @UploadedFiles() files: Express.Multer.File[],
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
     @Body() body,
   ): Promise<{ message: string }> {
-    const facilityPhotos = await this.faphoService.storeFileInfo(files, body);
-
+    await this.faphoService.storeFileInfo(file, body);
     return {
-      message: 'Facility photos have been successfully uploaded.',
+      message: 'Facility photo has been successfully uploaded.',
     };
   }
+
+  // @Post('upload')
+  // @UseInterceptors(
+  //   FilesInterceptor('files', 10, {
+  //     dest: 'public/upload',
+  //     storage: diskStorage({
+  //       destination: 'public/upload',
+  //       filename(req, file, cb) {
+  //         return cb(null, file.originalname);
+  //       },
+  //     }),
+  //   }),
+  // )
+  // async uploadFiles(
+  //   @UploadedFiles() files: Express.Multer.File[],
+  //   @Body() body,
+  // ): Promise<{ message: string }> {
+  //   await this.faphoService.storeFileInfo(files, body);
+
+  //   return {
+  //     message: 'Facility photos have been successfully uploaded.',
+  //   };
+  // }
 }
