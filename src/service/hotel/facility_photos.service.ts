@@ -58,10 +58,10 @@ export class FacilityPhotosService {
   ) {
     const fileInfo = new FacilityPhotos();
 
-    fileInfo.faphoUrl = `public/uploads/${file.originalname}`;
+    fileInfo.faphoUrl = `http://localhost:3005/facility-photos/public/upload/${file.filename}`;
     fileInfo.faphoPhotoFilename = file.filename;
     fileInfo.faphoModifieldDate = new Date();
-    fileInfo.faphoThumbnailFilename = `tumb ${file.filename}`;
+    fileInfo.faphoThumbnailFilename = `tumb ${file.originalname}`;
     fileInfo.faphoFaci = body.faphoFaci;
 
     return await this.repositoryFacPhotos.save(fileInfo);

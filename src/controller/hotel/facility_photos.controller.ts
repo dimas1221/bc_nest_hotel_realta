@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Req,
+  Res,
   UploadedFile,
   UploadedFiles,
   UseInterceptors,
@@ -15,6 +16,7 @@ import { FacilityPhotosService } from 'src/service/hotel/facility_photos.service
 import { FacilityPhotos } from 'entities/FacilityPhotos';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import multer, { diskStorage } from 'multer';
+import { join } from 'path';
 
 @Controller('facility-photos')
 export class FacilityPhotosController {
@@ -93,4 +95,8 @@ export class FacilityPhotosController {
   //     message: 'Facility photos have been successfully uploaded.',
   //   };
   // }
+  @Get('public/upload/:fileName')
+  getPhoto(@Param('fileName') fileName: string, @Res() res) {
+    return res.sendFile(fileName, { root: join('public/upload') });
+  }
 }
