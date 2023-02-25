@@ -69,7 +69,10 @@ export class FacilityPhotosController {
     if (!result) {
       return 'gagal upload';
     } else {
-      return 'berhasil upload';
+      return {
+        message: 'berhasil upload',
+        result: result.result,
+      };
     }
   }
 

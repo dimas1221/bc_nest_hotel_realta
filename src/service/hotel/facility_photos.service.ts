@@ -63,8 +63,14 @@ export class FacilityPhotosService {
     fileInfo.faphoModifieldDate = new Date();
     fileInfo.faphoThumbnailFilename = `tumb ${file.originalname}`;
     fileInfo.faphoFaci = body.faphoFaci;
+    fileInfo.faphoPrimary = body.faphoPrimary;
 
-    return await this.repositoryFacPhotos.save(fileInfo);
+    await this.repositoryFacPhotos.save(fileInfo);
+
+    const res = await this.repositoryFacPhotos.query(
+      'select * from hotel.facility_photos',
+    );
+    return { result: res };
   }
 
   // async storeFileInfo(
