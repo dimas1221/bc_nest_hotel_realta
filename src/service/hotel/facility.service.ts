@@ -61,7 +61,7 @@ export class FacilityService {
   //   );
   // }
   async insertFacilityAndPriceHistory(data: Facilities) {
-    return await this.repositoryFac.query(
+    await this.repositoryFac.query(
       `CALL hotel.insert_facility_and_price_history(
         $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15
       )`,
@@ -83,6 +83,10 @@ export class FacilityService {
         data.faciCagro,
       ],
     );
+    const res = await this.repositoryFac.query(
+      'select * from hotel.facilities',
+    );
+    return { result: res };
   }
 
   // update

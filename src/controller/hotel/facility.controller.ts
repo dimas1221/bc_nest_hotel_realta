@@ -59,7 +59,10 @@ export class FacilityController {
     if (!result) {
       return 'failed';
     } else {
-      return 'Facility and price history has been successfully added';
+      return {
+        message: 'berhasil insert',
+        result: result.result,
+      };
     }
   }
   @Put(':id')
