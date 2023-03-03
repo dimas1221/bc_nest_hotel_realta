@@ -2,8 +2,11 @@ import {
   Body,
   Controller,
   Delete,
+  FileTypeValidator,
   Get,
+  MaxFileSizeValidator,
   Param,
+  ParseFilePipe,
   Post,
   Put,
   Req,
@@ -76,9 +79,32 @@ export class FacilityPhotosController {
     }
   }
 
+  @Post('upload/firebase')
+  @UseInterceptors(FilesInterceptor('file[]', 20))
+  async uploadFileFirebase(
+    @UploadedFiles(
+      new ParseFilePipe({
+        validators: [
+          // new FileTypeValidator({ fileType: '.(png|jpg|jpeg)' }),
+          // new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
+        ],
+      }),
+    )
+    file,
+    @Body() body: any,
+  ) {
+    await this.faphoService.UploadFirebase(file, body);
+    const res = await this.faphoService.findAllFaciPhotos();
+    return {
+      message: 'berhasil upload',
+      result: { res },
+    };
+  }
+
+  // upload mutipel
   // @Post('upload')
   // @UseInterceptors(
-  //   FilesInterceptor('files', 10, {
+  //   FileInterceptor('file', {
   //     dest: 'public/upload',
   //     storage: diskStorage({
   //       destination: 'public/upload',
@@ -88,16 +114,18 @@ export class FacilityPhotosController {
   //     }),
   //   }),
   // )
-  // async uploadFiles(
-  //   @UploadedFiles() files: Express.Multer.File[],
-  //   @Body() body,
-  // ): Promise<{ message: string }> {
-  //   await this.faphoService.storeFileInfo(files, body);
-
-  //   return {
-  //     message: 'Facility photos have been successfully uploaded.',
-  //   };
+  // async uploadFile(@UploadedFile() file: any, @Body() body) {
+  //   const result = await this.faphoService.storeFileInfo(file, body);
+  //   if (!result) {
+  //     return 'gagal upload';
+  //   } else {
+  //     return {
+  //       message: 'berhasil upload',
+  //       result: result.result,
+  //     };
+  //   }
   // }
+
   @Get('public/upload/:fileName')
   getPhoto(@Param('fileName') fileName: string, @Res() res) {
     return res.sendFile(fileName, { root: join('public/upload') });

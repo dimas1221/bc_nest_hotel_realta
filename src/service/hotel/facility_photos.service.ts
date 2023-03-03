@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FacilityPhotos } from 'entities/FacilityPhotos';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import { initializeApp } from 'firebase/app';
+import { url } from 'inspector';
 
 @Injectable()
 export class FacilityPhotosService {
@@ -73,28 +76,55 @@ export class FacilityPhotosService {
     return { result: res };
   }
 
-  // async storeFileInfo(
-  //   files: Express.Multer.File[], // ubah parameter file menjadi files dengan tipe array of Express.Multer.File
-  //   body: any,
-  // ) {
-  //   const facilityPhotos: FacilityPhotos[] = [];
-  //   const promises = [];
+  // upload multipel in firebase
+  async UploadFirebase(file: any, body: any) {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyCEmZE2W1VOTZpPVrndbpAvVpAJnLfE_V0',
+      authDomain: 'hotelrealta.firebaseapp.com',
+      projectId: 'hotelrealta',
+      storageBucket: 'hotelrealta.appspot.com',
+      messagingSenderId: '481044855652',
+      appId: '1:481044855652:web:1441df251b64fd62c71871',
+      measurementId: 'G-1FZ6YKHLV9',
+    };
 
-  //   for (const file of files) {
-  //     const fileInfo = new FacilityPhotos();
-  //     fileInfo.faphoUrl = `public/uploads/${file.originalname}`;
-  //     fileInfo.faphoPhotoFilename = file.filename;
-  //     fileInfo.faphoModifieldDate = new Date();
-  //     fileInfo.faphoThumbnailFilename = `tumb ${file.filename}`;
-  //     fileInfo.faphoPrimary = body.faphoPrimary;
-  //     fileInfo.faphoFaci = body.faphoFaci;
-  //     facilityPhotos.push(fileInfo);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
 
-  //     promises.push(this.repositoryFacPhotos.save(fileInfo));
-  //   }
+    file &&
+      file.map(async (data: any, index: any) => {
+        const storageRef = ref(storage, `image/${data.originalname}`);
+        let primary = '0';
+        if (index == 0) {
+          primary = '1';
+        }
+        // Upload the file and metadata
+        const metadata = {
+          contentType: 'image/jpeg',
+          name: data.originalname,
+        };
 
-  //   await Promise.all(promises); // menjalankan semua promises pada satu waktu
+        await uploadBytes(storageRef, data.buffer, metadata)
+          .then(async (snapshot) => {
+            getDownloadURL(storageRef).then(async (url) => {
+              console.log('url', url);
+              const fileInfo = new FacilityPhotos();
 
-  //   return facilityPhotos; // mengembalikan array facilityPhotos
-  // }
+              fileInfo.faphoUrl = url;
+              fileInfo.faphoPhotoFilename = data.originalname;
+              fileInfo.faphoModifieldDate = new Date();
+              fileInfo.faphoThumbnailFilename = `tumb ${data.originalname}`;
+              fileInfo.faphoFaci = body.faphoFaci;
+              fileInfo.faphoPrimary = primary;
+
+              await this.repositoryFacPhotos.save(fileInfo);
+            });
+            console.log('Uploaded a blob or file!');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+  }
 }
