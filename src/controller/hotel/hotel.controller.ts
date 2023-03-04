@@ -46,11 +46,14 @@ export class HotelController {
 
   @Post('insert')
   async createHotel(@Body() data: Hotels) {
-    const hotel = await this.hotelService.createHotel(data);
-    if (!hotel) {
-      return 'failed insert to hotels';
+    const result = await this.hotelService.createHotel(data);
+    if (!result) {
+      return 'failed';
     } else {
-      return 'success insert to hotel';
+      return {
+        message: 'berhasil insert',
+        result: result.result,
+      };
     }
   }
 

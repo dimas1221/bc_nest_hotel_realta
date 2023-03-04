@@ -19,8 +19,11 @@ export class HotelService {
     return await this.hotelsRepository.query('select * from hotel.address');
   }
   // insert in table hotel
-  async createHotel(data: Hotels): Promise<Hotels> {
-    return await this.hotelsRepository.save(this.hotelsRepository.create(data));
+  async createHotel(data: Hotels) {
+    data.hotelPhonenumber = '+62 ' + data.hotelPhonenumber;
+    await this.hotelsRepository.save(this.hotelsRepository.create(data));
+    const res = await this.hotelsRepository.find();
+    return { result: res };
   }
 
   //view by hotel name
