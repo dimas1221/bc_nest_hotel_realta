@@ -81,11 +81,11 @@ export class FacilityPhotosController {
 
   @Post('upload/firebase')
   @UseInterceptors(FilesInterceptor('file[]', 20))
-  async uploadFileFirebase(
+  async logFiles(
     @UploadedFiles(
       new ParseFilePipe({
         validators: [
-          // new FileTypeValidator({ fileType: '.(png|jpg|jpeg)' }),
+          // new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
           // new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
         ],
       }),

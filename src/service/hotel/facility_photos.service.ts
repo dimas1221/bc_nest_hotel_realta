@@ -107,24 +107,27 @@ export class FacilityPhotosService {
 
         await uploadBytes(storageRef, data.buffer, metadata)
           .then(async (snapshot) => {
-            getDownloadURL(storageRef).then(async (url) => {
-              console.log('url', url);
-              const fileInfo = new FacilityPhotos();
-
-              fileInfo.faphoUrl = url;
-              fileInfo.faphoPhotoFilename = data.originalname;
-              fileInfo.faphoModifieldDate = new Date();
-              fileInfo.faphoThumbnailFilename = `tumb ${data.originalname}`;
-              fileInfo.faphoFaci = body.faphoFaci;
-              fileInfo.faphoPrimary = primary;
-
-              await this.repositoryFacPhotos.save(fileInfo);
-            });
             console.log('Uploaded a blob or file!');
           })
           .catch((err) => {
             console.log(err);
           });
+
+        getDownloadURL(storageRef).then(async (url) => {
+          console.log('url', url);
+          const fileInfo = new FacilityPhotos();
+
+          fileInfo.faphoUrl = url;
+          fileInfo.faphoPhotoFilename = data.originalname;
+          fileInfo.faphoModifieldDate = new Date();
+          fileInfo.faphoThumbnailFilename = `tumb ${data.originalname}`;
+          fileInfo.faphoFaci = body.faphoFaci;
+          fileInfo.faphoPrimary = primary;
+
+          await this.repositoryFacPhotos.save(fileInfo);
+        });
       });
+
+    return this.findAllFaciPhotos();
   }
 }
