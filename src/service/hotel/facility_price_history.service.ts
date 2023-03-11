@@ -18,7 +18,7 @@ export class FacilityPriceHistoryService {
   async createFacilitiPriceHisty(
     data: FacilityPriceHistory,
   ): Promise<FacilityPriceHistory> {
-    return await this.fph.save(this.fph.create(data));
+    return await this.fph.save(data);
   }
 
   // update

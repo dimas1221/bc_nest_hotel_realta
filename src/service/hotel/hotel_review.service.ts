@@ -44,9 +44,7 @@ export class HotelReviewService {
       data.horeRating == good1 ||
       data.horeRating == best1
     ) {
-      return await this.repositoryHotelReview.save(
-        this.repositoryHotelReview.create(data),
-      );
+      return await this.repositoryHotelReview.save(data);
     } else {
       console.log('error');
     }

@@ -29,9 +29,7 @@ export class FacilityPhotosService {
     let p = fapho_primary.primary;
 
     if (data.faphoPrimary == nP || data.faphoPrimary == p) {
-      return await this.repositoryFacPhotos.save(
-        this.repositoryFacPhotos.create(data),
-      );
+      return await this.repositoryFacPhotos.save(data);
     } else {
       console.log('error');
     }
@@ -127,7 +125,5 @@ export class FacilityPhotosService {
           await this.repositoryFacPhotos.save(fileInfo);
         });
       });
-
-    return this.findAllFaciPhotos();
   }
 }

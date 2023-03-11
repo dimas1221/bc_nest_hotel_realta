@@ -16,12 +16,12 @@ export class HotelService {
   }
   // find address
   async findAddress() {
-    return await this.hotelsRepository.query('select * from hotel.address');
+    return await this.hotelsRepository.query('select * from hotel.adsress');
   }
   // insert in table hotel
   async createHotel(data: Hotels) {
     data.hotelPhonenumber = '+62 ' + data.hotelPhonenumber;
-    await this.hotelsRepository.save(this.hotelsRepository.create(data));
+    await this.hotelsRepository.save(data);
     const res = await this.hotelsRepository.find();
     return { result: res };
   }
